@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>gain Demo</title>
+  <link rel="import" href="olos-delay.html">
+
+  <script src="../webcomponentsjs/webcomponents.min.js"></script>
+
+  <script>
+  var audioContext = new AudioContext();
+  var gain;
+  window.onload = function() {
+    gain = document.querySelector("olos-gain");
+  }
+
+  </script>
+
+  <style>
+  </style>
+</head>
+<body unresolved>
+
+<olos-gain></olos-gain>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  color: green;
+  font-family: 'RobotoDraft', sans-serif;
+  font-size:14px;
+  padding: 10px;
+}
+
+#container {
+/*  border: 2px solid;
+  border-radius: 25px;
+  padding: 10px;
+  background: white;
+  opacity: 90%;
+  cursor: pointer;
+  position:fixed;*/
+}
+
+paper-item {
+  font-size: 12px;
+}

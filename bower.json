@@ -1,0 +1,14 @@
+{
+  "name": "olos-gain",
+  "version": "0.0.0",
+  "license": "MIT",  
+  "main": "olos-gain.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.1",
+    "paper-slider": "Polymer/paper-slider#~0.5.1",
+    "font-roboto": "Polymer/font-roboto#^0.5.0"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^2.2.3"
+  }
+}
