@@ -11,14 +11,103 @@ Web Audio gain
 @status alpha
 @homepage 
 -->
-<polymer-element name="olos-gain" attributes="input gainParam output width height">
+  <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<dom-module id="olos-gain">
+  <style>
+    /* TODO(polyup): For speed, consider reworking these styles with .classes
+                     and #ids rather than [attributes].
+    */
+    [layout] {
+      @apply(--layout);
+    }
+    [layout][horizontal] {
+      @apply(--layout-horizontal);
+    }
+    [layout][center] {
+      @apply(--layout-center);
+    }
+  </style>
+  <link rel="import" type="css" href="olos-gain.css">
   <template>
-    <link rel="stylesheet" href="olos-gain.css"></link>
 
-    <label>Gain Amount</label>
-    <paper-slider pin="true" id="gainAmountSlider" min="0" max="1" step="0.001" immediateValue="{{gainValue}}" on-immediate-value-change="{{setGain}}" style="width: 70%"></paper-slider>
+      <div id="container" class="olos-container">
 
+        <div center="" horizontal="" layout="">
+          <paper-tooltip label="0 is off, 1 is full volume">Gain</paper-tooltip>
+          <paper-slider pin="true" id="gainAmountSlider" min="0" max="1" step="0.001" value="0.5" immediatevalue="{{gainValue}}" on-immediate-value-change="setGain" style="width: 100%" editable=""></paper-slider>
+        </div>
+      </div>
   </template>
-  <script src="olos-gain.js"type="text/javascript"></script>
-
-</polymer-element>
+  <script>
+    (function (params) {
+      Polymer({
+        is: 'olos-gain',
+        properties: {
+          gainParam: { notify: true },
+          height: {
+            type: Number,
+            value: 37
+          },
+          input: { notify: true },
+          // inputs and outputs
+          output: {
+            value: null,
+            notify: true
+          },
+          publicMethods: {
+            type: Array,
+            value: function () {
+              return [
+                'setupGain',
+                'setGain'
+              ];
+            }
+          },
+          rootfolder: {
+            type: String,
+            value: '../olos-gain/'
+          },
+          width: {
+            type: Number,
+            value: 123
+          }
+        },
+        ready: function () {
+          var self = this;
+          self._audioContext = audioContext;
+          self.slider = self.$.gainAmountSlider;
+          self.gainNode = audioContext.createGain();
+          self.setupGain();
+        },
+        setGain: function (e, detail) {
+          var now = audioContext.currentTime;
+          this.output.gain.linearRampToValueAtTime(this.gainValue, now + 0.0001);
+        },
+        // publicly editable
+        setupGain: function () {
+          this.output = this.input = this.gainNode;
+          this.gainParam = this.output.gain;
+          this.set('slider.min', 0);
+          this.set('slider.max', 1);
+          this.set('slider.step', 0.01);
+        },
+        _draw: function () {
+        },
+        // this.$.gainAmountSlider.value = this.output.gain.value;
+        dispose: function () {
+          var self = this;
+          // remove audio elements
+          var nodes = ['inputAudio'];
+          for (var i = 0; i < nodes.length; i++) {
+            try {
+              var node = self[nodes[i]];
+              node.disconnect();
+              node = null;
+            } catch (e) {
+            }
+          }
+        }
+      });
+    }());
+  </script>
+</dom-module>
