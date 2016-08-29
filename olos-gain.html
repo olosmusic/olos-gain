@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-slider/paper-slider.html">
+<link rel="import" href="../paper-tooltip/paper-tooltip.html">
 
 <!--
 Web Audio gain
@@ -34,7 +35,7 @@ Web Audio gain
 
         <div center="" horizontal="" layout="">
           <paper-tooltip label="0 is off, 1 is full volume">Gain</paper-tooltip>
-          <paper-slider pin="true" id="gainAmountSlider" min="0" max="1" step="0.001" value="0.5" immediatevalue="{{gainValue}}" on-immediate-value-change="setGain" style="width: 100%" editable=""></paper-slider>
+          <paper-slider pin="true" id="gainAmountSlider" min="0" max="100" step="0.001" value="0.5" immediate-value="{{gainValue}}" on-immediate-value-change="setGain" style="width: 100%" editable=""></paper-slider>
         </div>
       </div>
   </template>
@@ -44,6 +45,10 @@ Web Audio gain
         is: 'olos-gain',
         properties: {
           gainParam: { notify: true },
+          gainValue: {
+            type: Number,
+            default: 0
+          },
           height: {
             type: Number,
             value: 37
@@ -88,7 +93,7 @@ Web Audio gain
           this.output = this.input = this.gainNode;
           this.gainParam = this.output.gain;
           this.set('slider.min', 0);
-          this.set('slider.max', 1);
+          this.set('slider.max', 100);
           this.set('slider.step', 0.01);
         },
         _draw: function () {
